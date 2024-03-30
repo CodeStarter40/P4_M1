@@ -5,7 +5,7 @@ plugins {
 
 android {
   namespace = "com.aura"
-  compileSdk = 33
+  compileSdk = 34
 
   defaultConfig {
     applicationId = "com.aura"
@@ -37,12 +37,27 @@ android {
 
 dependencies {
 
-  implementation("androidx.core:core-ktx:1.9.0")
+  implementation("androidx.core:core-ktx:1.12.0")
   implementation("androidx.appcompat:appcompat:1.6.1")
-  implementation("com.google.android.material:material:1.8.0")
-  implementation("androidx.annotation:annotation:1.6.0")
+  implementation("com.google.android.material:material:1.11.0")
+  implementation("androidx.annotation:annotation:1.7.1")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
   testImplementation("junit:junit:4.13.2")
   androidTestImplementation("androidx.test.ext:junit:1.1.5")
   androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+  //implémentation viewmodel et livedata
+  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+  implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+  //serialization
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+  //retrofit
+  implementation("com.squareup.retrofit2:retrofit:2.9.0")
+  //convertisseur ktxserialisation pour Retrofit
+  implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+  //OkHttp
+  implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+  //ktx serialization
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
 }

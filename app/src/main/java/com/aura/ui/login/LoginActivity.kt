@@ -4,38 +4,88 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.aura.databinding.ActivityLoginBinding
 import com.aura.ui.home.HomeActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import android.widget.Toast
+import com.aura.ui.data.LoginState
 
-/**
- * The login activity for the app.
- */
-class LoginActivity : AppCompatActivity()
-{
+class LoginActivity : AppCompatActivity() {
 
-  /**
-   * The binding for the login layout.
-   */
   private lateinit var binding: ActivityLoginBinding
+  private lateinit var viewModel: LoginViewModel
 
-  override fun onCreate(savedInstanceState: Bundle?)
-  {
+  override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
     binding = ActivityLoginBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    val login = binding.login
-    val loading = binding.loading
+    viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-    login.setOnClickListener {
-      loading.visibility = View.VISIBLE
+    setupTextWatchers()
+    setupLoginStateObserver()
+    setupLoginButton()
+  }
 
-      val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-      startActivity(intent)
-
-      finish()
+  private fun setupTextWatchers() {
+    binding.identifier.addTextChangedListener {
+      viewModel.validateForm(
+        binding.identifier.text.toString(),
+        binding.password.text.toString()
+      )
+    }
+    binding.password.addTextChangedListener {
+      viewModel.validateForm(
+        binding.identifier.text.toString(),
+        binding.password.text.toString()
+      )
     }
   }
 
+  private fun setupLoginStateObserver() {
+    lifecycleScope.launch {
+      viewModel.loginState.collect { state ->
+        handleLoginState(state)
+      }
+    }
+  }
+
+  private fun handleLoginState(state: LoginState) {
+    when (state) {
+      is LoginState.Loading -> binding.loading.visibility = View.VISIBLE
+      is LoginState.Success -> navigateToHome()
+      is LoginState.Error -> showError(state.message)
+      else -> {} //other if necessary
+    }
+  }
+
+  private fun setupLoginButton() {
+    binding.login.setOnClickListener {
+      val identifier = binding.identifier.text.toString()
+      val password = binding.password.text.toString()
+      viewModel.login(identifier, password)
+    }
+
+    //observe form validation change
+    lifecycleScope.launch {
+      viewModel.isFormValid.collect { isValid ->
+        binding.login.isEnabled = isValid
+      }
+    }
+  }
+
+  private fun navigateToHome() {
+    binding.loading.visibility = View.GONE
+    startActivity(Intent(this, HomeActivity::class.java))
+    finish()
+  }
+
+  private fun showError(message: String) {
+    binding.loading.visibility = View.GONE
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+  }
 }
