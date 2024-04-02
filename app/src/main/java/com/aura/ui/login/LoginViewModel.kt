@@ -40,7 +40,7 @@ class LoginViewModel: ViewModel() {
 
             } else {
                 //echec place un message d'erreur login fail
-                _loginState.value = LoginState.Error("Connexion Failed")
+                _loginState.value = LoginState.Error("Invalid credentials")
             }
         } catch (e: Exception) {
             _loginState.value = LoginState.Error(e.message ?: "Unknown error")
