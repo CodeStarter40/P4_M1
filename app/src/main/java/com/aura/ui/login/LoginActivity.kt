@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import android.widget.Toast
 import com.aura.ui.data.LoginState
+import kotlinx.coroutines.delay
 
 class LoginActivity : AppCompatActivity() {
 
@@ -56,9 +57,10 @@ class LoginActivity : AppCompatActivity() {
 
   private fun handleLoginState(state: LoginState) {
     when (state) {
-      is LoginState.Loading -> binding.loading.visibility = View.GONE
+      is LoginState.Waiting -> binding.loading.visibility = View.GONE
+      is LoginState.Loading -> binding.loading.visibility = View.VISIBLE
       is LoginState.Success -> {
-        binding.loading.visibility = View.GONE
+        binding.loading.visibility = View.VISIBLE
         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
         navigateToHome()
       }
@@ -75,6 +77,8 @@ class LoginActivity : AppCompatActivity() {
       val identifier = binding.identifier.text.toString()
       val password = binding.password.text.toString()
       viewModel.login(identifier, password)
+      binding.identifier.text.clear()
+      binding.password.text.clear()
     }
 
     //observe form validation change
@@ -86,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
   }
 
   private fun navigateToHome() {
-    binding.loading.visibility = View.GONE
+    binding.loading.visibility = View.VISIBLE
     startActivity(Intent(this, HomeActivity::class.java))
     finish()
   }

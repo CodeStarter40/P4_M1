@@ -19,7 +19,7 @@ class LoginViewModel: ViewModel() {
     private val loginService: LoginService = NetworkModule.retrofit.create(LoginService::class.java)
 
     //mutablestateFlow pour LoginState
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Waiting)
     val loginState = _loginState.asStateFlow()
 
 
@@ -35,7 +35,7 @@ class LoginViewModel: ViewModel() {
             val credentials = Credentials(id = identifier, password = password)
             val result = loginService.login(credentials)
             if (result.granted){
-                //connexion reussie, toast message "Connexion reussie"
+                //connexion reussie, toast message "Connexion Succès"
                 _loginState.value = LoginState.Success
 
             } else {
