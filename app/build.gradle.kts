@@ -1,6 +1,7 @@
 plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
 }
 
 android {
@@ -50,7 +51,7 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
   //serialization
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
   //retrofit
   implementation("com.squareup.retrofit2:retrofit:2.9.0")
   //convertisseur ktxserialisation pour Retrofit

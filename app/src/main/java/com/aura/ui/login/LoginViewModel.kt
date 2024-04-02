@@ -31,6 +31,7 @@ class LoginViewModel: ViewModel() {
 
     fun login(identifier: String,password: String){ viewModelScope.launch {
         try {
+            _loginState.value = LoginState.Loading
             val credentials = Credentials(id = identifier, password = password)
             val result = loginService.login(credentials)
             if (result.granted){

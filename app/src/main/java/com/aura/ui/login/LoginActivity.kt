@@ -56,14 +56,21 @@ class LoginActivity : AppCompatActivity() {
 
   private fun handleLoginState(state: LoginState) {
     when (state) {
-      is LoginState.Loading -> binding.loading.visibility = View.VISIBLE
-      is LoginState.Success -> navigateToHome()
-      is LoginState.Error -> showError(state.message)
+      is LoginState.Loading -> binding.loading.visibility = View.GONE
+      is LoginState.Success -> {
+        binding.loading.visibility = View.GONE
+        Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
+        navigateToHome()
+      }
+      is LoginState.Error -> {
+        binding.loading.visibility = View.GONE
+        showError(state.message)
+      }
       else -> {} //other if necessary
     }
   }
 
-  private fun setupLoginButton() {
+  private fun setupLoginButton() { // envoi des id / pw à la fonction login
     binding.login.setOnClickListener {
       val identifier = binding.identifier.text.toString()
       val password = binding.password.text.toString()
