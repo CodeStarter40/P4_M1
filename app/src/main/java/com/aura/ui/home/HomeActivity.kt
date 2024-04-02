@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.aura.R
 import com.aura.databinding.ActivityHomeBinding
 import com.aura.ui.login.LoginActivity
@@ -22,6 +24,7 @@ class HomeActivity : AppCompatActivity()
    * The binding for the home layout.
    */
   private lateinit var binding: ActivityHomeBinding
+  private lateinit var homeViewModel: HomeViewModel
 
   /**
    * A callback for the result of starting the TransferActivity.
@@ -38,6 +41,17 @@ class HomeActivity : AppCompatActivity()
     binding = ActivityHomeBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    //added WIP
+    homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+    observeAccountData()
+
+    val userId = intent.getStringExtra("USER_ID")
+    if (userId !=null){
+      homeViewModel.fetchAccountUser(userId)
+    } else {
+      Toast.makeText(this, "No user found", Toast.LENGTH_SHORT).show()
+    }
+
     val balance = binding.balance
     val transfer = binding.transfer
 
@@ -46,6 +60,10 @@ class HomeActivity : AppCompatActivity()
     transfer.setOnClickListener {
       startTransferActivityForResult.launch(Intent(this@HomeActivity, TransferActivity::class.java))
     }
+  }
+
+  private fun observeAccountData() {
+    TODO("Not yet implemented")
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean
