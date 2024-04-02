@@ -68,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
         binding.loading.visibility = View.GONE
         showError(state.message)
       }
-      else -> {} //other if necessary
     }
   }
 

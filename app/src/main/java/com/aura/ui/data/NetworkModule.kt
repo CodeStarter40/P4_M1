@@ -1,5 +1,6 @@
 package com.aura.ui.data
 
+import com.aura.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -20,7 +21,7 @@ object NetworkModule {
 
     @OptIn(ExperimentalSerializationApi::class)
     val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://10.0.2.2:8080")
+        .baseUrl(BuildConfig.SERVER)
         .addConverterFactory(json.asConverterFactory(contentType))
         .client(okHttpClient)
         .build()

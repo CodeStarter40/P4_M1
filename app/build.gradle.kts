@@ -14,6 +14,7 @@ android {
     targetSdk = 33
     versionCode = 1
     versionName = "1.0"
+    buildConfigField("String", "SERVER", "\"http://10.0.2.2:8080/\"")
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -33,6 +34,7 @@ android {
   }
   buildFeatures {
     viewBinding = true
+    android.buildFeatures.buildConfig = true
   }
 }
 
