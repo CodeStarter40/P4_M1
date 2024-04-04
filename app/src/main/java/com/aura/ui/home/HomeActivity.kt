@@ -45,10 +45,10 @@ class HomeActivity : AppCompatActivity()
     homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     observeAccountData()
 
-    val userId = intent.getStringExtra("USER_ID")
+    val userId = intent.getStringExtra("USER_ID") //pickup user by intent
     if (userId !=null){
-      homeViewModel.fetchAccountUser(userId)
-    } else {
+      homeViewModel.fetchAccountUser(userId) //call method fetchAccountUser du homViewModel
+    } else { //info toast if user not found
       Toast.makeText(this, "No user found", Toast.LENGTH_SHORT).show()
     }
 
