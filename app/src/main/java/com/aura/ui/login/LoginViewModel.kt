@@ -7,16 +7,18 @@ import com.aura.ui.api.LoginService
 import com.aura.ui.data.LoginState
 import com.aura.ui.data.NetworkModule
 import com.aura.ui.model.Credentials
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class LoginViewModel: ViewModel() {
+
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginService: LoginService) : ViewModel() {
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid = _isFormValid.asStateFlow()
-    //utilisation de Networkmodule pour creer une instance de LoginService
-    private val loginService: LoginService = NetworkModule.retrofit.create(LoginService::class.java)
 
     //mutablestateFlow pour LoginState
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Waiting)
@@ -29,6 +31,18 @@ class LoginViewModel: ViewModel() {
         _isFormValid.value = isValide
     }
 
+    /**
+     * Tente de se connecter avec les identifiants fournis.
+     * - Lance un coroutine dans le viewModelScope pour gérer le processus de connexion asynchrone.
+     * - Définit le LiveData loginState sur l'état Loading pour indiquer que le processus de connexion a démarré.
+     * - Crée un objet Credentials avec l'identifiant et le mot de passe fournis.
+     * - Appelle le service de connexion pour authentifier les identifiants.
+     * - Si l'authentification est réussie, définit le loginState sur l'état Success et affiche un message de réussite.
+     * - Si l'authentification échoue, définit le loginState sur l'état Error avec un message d'erreur approprié.
+     * - Si une exception se produit pendant le processus de connexion, définit le loginState sur l'état Error avec un message d'erreur générique.
+     * @param identifier L'identifiant de l'utilisateur.
+     * @param password Le mot de passe de l'utilisateur.
+     */
     fun login(identifier: String,password: String){ viewModelScope.launch {
         try {
             _loginState.value = LoginState.Loading

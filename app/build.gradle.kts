@@ -2,6 +2,8 @@ plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
   id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
+  kotlin("kapt")
+  id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -26,8 +28,8 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
   kotlinOptions {
     jvmTarget = "1.8"
@@ -35,6 +37,13 @@ android {
   buildFeatures {
     viewBinding = true
     android.buildFeatures.buildConfig = true
+  }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+  kapt {
+    correctErrorTypes = true
+    useBuildCache = true
   }
 }
 
@@ -52,14 +61,18 @@ dependencies {
   //implémentation viewmodel et livedata
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-  //serialization
+  implementation("androidx.fragment:fragment-ktx:1.6.2")
 
+  //injection
+  implementation("com.google.dagger:hilt-android:2.51")
+  kapt("com.google.dagger:hilt-android-compiler:2.51")
   //retrofit
   implementation("com.squareup.retrofit2:retrofit:2.9.0")
   //convertisseur ktxserialisation pour Retrofit
   implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
   //OkHttp
   implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+  implementation("com.squareup.okhttp3:okhttp:4.10.0")
   //ktx serialization
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
