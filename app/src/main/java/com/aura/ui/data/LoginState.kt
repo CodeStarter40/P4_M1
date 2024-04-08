@@ -6,11 +6,17 @@ package com.aura.ui.data
 sealed class LoginState {
     object Waiting : LoginState()
     object Loading : LoginState()
-    object Success : LoginState()
 
     /**
      * Represents the state when an error occurs during the login process.
      * @param message The error message describing the cause of the error.
      */
     class Error(val message: String) : LoginState()
+
+    /**
+     * Représente un état de connexion réussie.
+     * @param userId L'identifiant de l'utilisateur connecté.
+     * Cette classe hérite de LoginState et stocke l'identifiant de l'utilisateur connecté.
+     */
+    class Success(val userId: String) : LoginState()
 }

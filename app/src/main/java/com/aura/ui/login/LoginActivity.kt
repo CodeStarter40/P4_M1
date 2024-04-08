@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
       is LoginState.Success -> {
         binding.loading.visibility = View.VISIBLE
         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
-        navigateToHome()
+        navigateToHome(state.userId)
       }
       is LoginState.Error -> {
         binding.loading.visibility = View.GONE
@@ -117,13 +117,15 @@ class LoginActivity : AppCompatActivity() {
   }
 
   /**
-    * Navigue l'utilisateur vers l'écran d'accueil.
-    * Définit la visibilité du chargement sur "visible" pour indiquer une transition.
-    * Lance l'activité HomeActivity et termine l'activité actuelle.
+   * Navigue l'utilisateur vers l'écran d'accueil après une connexion réussie.
+   * @param userId L'identifiant unique de l'utilisateur connecté.
+   * Cette fonction crée un Intent pour naviguer vers l'activité HomeActivity,
+   * en passant l'identifiant de l'utilisateur en tant qu'extra à l'intent.
+   * Ensuite, elle démarre l'activité HomeActivity et termine l'activité actuelle.
    */
-  private fun navigateToHome() {
-    binding.loading.visibility = View.VISIBLE
-    startActivity(Intent(this, HomeActivity::class.java))
+  private fun navigateToHome(userId: String) {
+    val intent = Intent(this, HomeActivity::class.java).apply { putExtra("USER_ID", userId) } //.apply putextra("USER_ID, userId) ajout à l'intent
+    startActivity(intent)
     finish()
   }
 

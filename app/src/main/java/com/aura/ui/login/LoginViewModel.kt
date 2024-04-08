@@ -1,11 +1,10 @@
 package com.aura.ui.login
 
-import android.service.carrier.CarrierIdentifier
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.ui.api.LoginService
 import com.aura.ui.data.LoginState
-import com.aura.ui.data.NetworkModule
 import com.aura.ui.model.Credentials
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +36,7 @@ class LoginViewModel @Inject constructor(private val loginService: LoginService)
      * - Définit le LiveData loginState sur l'état Loading pour indiquer que le processus de connexion a démarré.
      * - Crée un objet Credentials avec l'identifiant et le mot de passe fournis.
      * - Appelle le service de connexion pour authentifier les identifiants.
-     * - Si l'authentification est réussie, définit le loginState sur l'état Success et affiche un message de réussite.
+     * - Si l'authentification est réussie, définit le loginState sur l'état Success, modifie la val dans LoginState, identifier -> userId et affiche un message de réussite.
      * - Si l'authentification échoue, définit le loginState sur l'état Error avec un message d'erreur approprié.
      * - Si une exception se produit pendant le processus de connexion, définit le loginState sur l'état Error avec un message d'erreur générique.
      * @param identifier L'identifiant de l'utilisateur.
@@ -50,7 +49,7 @@ class LoginViewModel @Inject constructor(private val loginService: LoginService)
             val result = loginService.login(credentials)
             if (result.granted){
                 //connexion reussie, toast message "Connexion Succès"
-                _loginState.value = LoginState.Success
+                _loginState.value = LoginState.Success(identifier)//recup de l'identifier -> vers userId
 
             } else {
                 //echec place un message d'erreur login fail
