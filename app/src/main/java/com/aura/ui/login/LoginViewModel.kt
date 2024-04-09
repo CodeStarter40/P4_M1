@@ -3,7 +3,7 @@ package com.aura.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aura.ui.api.LoginService
+import com.aura.ui.api.ServiceInterface
 import com.aura.ui.data.LoginState
 import com.aura.ui.model.Credentials
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginService: LoginService) : ViewModel() {
+class LoginViewModel @Inject constructor(private val serviceInterface: ServiceInterface) : ViewModel() {
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid = _isFormValid.asStateFlow()
 
@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(private val loginService: LoginService)
         try {
             _loginState.value = LoginState.Loading
             val credentials = Credentials(id = identifier, password = password)
-            val result = loginService.login(credentials)
+            val result = serviceInterface.login(credentials)
             if (result.granted){
                 //connexion reussie, toast message "Connexion Succès"
                 _loginState.value = LoginState.Success(identifier)//recup de l'identifier -> vers userId

@@ -8,7 +8,7 @@ import com.aura.ui.model.CredentialsResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface LoginService {
+interface ServiceInterface {
     @POST("/login")
     suspend fun login(@Body credentials: Credentials): CredentialsResult
 

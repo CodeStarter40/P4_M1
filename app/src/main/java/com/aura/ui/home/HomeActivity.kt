@@ -17,9 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 
-/**
- * The home activity for the app.
- */
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
   private val viewModel: HomeViewModel by viewModels()
@@ -53,14 +50,6 @@ class HomeActivity : AppCompatActivity() {
     }
   }
 
-
-  /**
-   * Observer les données du compte et mettre à jour l'interface utilisateur en conséquence.
-   * Cette fonction lance une coroutine en utilisant [lifecycleScope.launchWhenStarted] pour collecter
-   * les données du compte depuis [viewModel.accounts]. Ensuite, elle trouve le compte principal
-   * dans la liste collectée et met à jour le TextView du solde avec le montant du solde en euros,
-   * ou le met à "N/A" si le compte principal n'est pas trouvé.
-   */
   private fun observeAccountData() {
     lifecycleScope.launchWhenStarted {
       viewModel.accounts.collect { accounts ->

@@ -1,7 +1,7 @@
 package com.aura.ui.data
 
 import com.aura.BuildConfig
-import com.aura.ui.api.LoginService
+import com.aura.ui.api.ServiceInterface
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -38,7 +38,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideLoginService(retrofit: Retrofit): LoginService =
-        retrofit.create(LoginService::class.java)
+    fun provideLoginService(retrofit: Retrofit): ServiceInterface =
+        retrofit.create(ServiceInterface::class.java)
 }
 
