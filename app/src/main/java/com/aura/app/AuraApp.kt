@@ -1,4 +1,4 @@
-package com.aura.ui
+package com.aura.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.aura.ui.data
+package com.aura.app.ui.login
 
 /**
  * Represents the various states of the login process.

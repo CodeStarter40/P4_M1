@@ -1,11 +1,10 @@
-package com.aura.ui.login
+package com.aura.app.ui.login
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aura.ui.api.ServiceInterface
-import com.aura.ui.data.LoginState
-import com.aura.ui.model.Credentials
+import com.aura.app.data.network.ServiceInterface
+import com.aura.app.data.model.Credentials
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package com.aura.ui.login
+package com.aura.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.aura.databinding.ActivityLoginBinding
-import com.aura.ui.home.HomeActivity
+import com.aura.app.ui.home.HomeActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import android.widget.Toast
-import com.aura.ui.data.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 
 

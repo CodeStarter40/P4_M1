@@ -1,7 +1,6 @@
-package com.aura.ui.data
+package com.aura.app.data.network
 
 import com.aura.BuildConfig
-import com.aura.ui.api.ServiceInterface
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

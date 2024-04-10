@@ -1,4 +1,4 @@
-package com.aura.ui.home
+package com.aura.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.aura.R
 import com.aura.databinding.ActivityHomeBinding
-import com.aura.ui.login.LoginActivity
-import com.aura.ui.transfer.TransferActivity
+import com.aura.app.ui.login.LoginActivity
+import com.aura.app.ui.transfer.TransferActivity
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope

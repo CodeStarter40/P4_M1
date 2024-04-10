@@ -1,10 +1,10 @@
-package com.aura.ui.api
+package com.aura.app.data.network
 
-import com.aura.ui.model.Account
+import com.aura.app.data.model.Account
 import retrofit2.http.Body
 import retrofit2.http.POST
-import com.aura.ui.model.Credentials
-import com.aura.ui.model.CredentialsResult
+import com.aura.app.data.model.Credentials
+import com.aura.app.data.model.CredentialsResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

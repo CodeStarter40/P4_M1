@@ -1,10 +1,10 @@
-package com.aura.ui.home
+package com.aura.app.ui.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aura.ui.api.ServiceInterface
-import com.aura.ui.model.Account
+import com.aura.app.data.network.ServiceInterface
+import com.aura.app.data.model.Account
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

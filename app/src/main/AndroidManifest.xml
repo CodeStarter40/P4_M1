@@ -6,7 +6,7 @@
   <uses-permission android:name="android.permission.INTERNET" />
 
   <application
-    android:name=".ui.AuraApp"
+    android:name=".app.AuraApp"
     android:networkSecurityConfig="@xml/network_security_allow_http"
     android:allowBackup="true"
     android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,7 +21,7 @@
     >
 
     <activity
-      android:name=".ui.login.LoginActivity"
+      android:name=".app.ui.login.LoginActivity"
       android:exported="true"
       >
       <intent-filter>
@@ -32,12 +32,12 @@
     </activity>
 
     <activity
-      android:name=".ui.home.HomeActivity"
+      android:name=".app.ui.home.HomeActivity"
       android:exported="false"
       />
 
     <activity
-      android:name=".ui.transfer.TransferActivity"
+      android:name=".app.ui.transfer.TransferActivity"
       android:exported="false"
       />
 
