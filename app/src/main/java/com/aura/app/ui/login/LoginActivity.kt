@@ -1,4 +1,4 @@
-package com.aura.ui.login
+package com.aura.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.aura.databinding.ActivityLoginBinding
-import com.aura.ui.home.HomeActivity
+import com.aura.app.ui.home.HomeActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import android.widget.Toast
-import com.aura.ui.data.LoginState
-import kotlinx.coroutines.delay
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityLoginBinding
@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
     setupLoginButton()
   }
 
+
   private fun setupTextWatchers() {
     binding.identifier.addTextChangedListener {
       viewModel.validateForm(
@@ -47,13 +48,13 @@ class LoginActivity : AppCompatActivity() {
     }
   }
 
+
   private fun setupLoginStateObserver() {
     lifecycleScope.launch {
-      viewModel.loginState.collect { state ->
-        handleLoginState(state)
-      }
+      viewModel.loginState.collect { state -> handleLoginState(state) }
     }
   }
+
 
   private fun handleLoginState(state: LoginState) {
     when (state) {
@@ -62,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
       is LoginState.Success -> {
         binding.loading.visibility = View.VISIBLE
         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
-        navigateToHome()
+        navigateToHome(state.userId)
       }
       is LoginState.Error -> {
         binding.loading.visibility = View.GONE
@@ -88,11 +89,13 @@ class LoginActivity : AppCompatActivity() {
     }
   }
 
-  private fun navigateToHome() {
-    binding.loading.visibility = View.VISIBLE
-    startActivity(Intent(this, HomeActivity::class.java))
+
+  private fun navigateToHome(userId: String) {
+    val intent = Intent(this, HomeActivity::class.java).apply { putExtra("USER_ID", userId) } //.apply putextra("USER_ID, userId) ajout à l'intent
+    startActivity(intent)
     finish()
   }
+
 
   private fun showError(message: String) {
     binding.loading.visibility = View.GONE
