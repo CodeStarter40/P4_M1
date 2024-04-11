@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.app.data.network.ServiceInterface
 import com.aura.app.data.model.Account
+import com.aura.app.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val serviceInterface: ServiceInterface) : ViewModel()  {
+class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel()  {
     //mutableStateFlow pour stocker la liste des comptes, initialisé avec une liste vide
     private val _accounts = MutableStateFlow<List<Account>>(emptyList())
     //stateFlow immuable exposant la liste des comptes en lecture seule
@@ -26,7 +27,7 @@ class HomeViewModel @Inject constructor(private val serviceInterface: ServiceInt
     fun fetchAccountUser(userId: String) {
         viewModelScope.launch { //asynch
             try {
-                val accountsList = serviceInterface.getAccountsByUserId(userId) //récup de la liste des comptes de l'utilisateur à partir du service
+                val accountsList = repository.getAccountsByUserId(userId) //récup de la liste des comptes de l'utilisateur à partir du service
                 _accounts.value = accountsList //maj account dans le mutableflow
                 Log.d("HomeViewModel","Account récupéré avec succès")
             } catch (e: Exception) {

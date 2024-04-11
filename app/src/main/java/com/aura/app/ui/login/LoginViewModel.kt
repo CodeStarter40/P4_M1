@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.app.data.network.ServiceInterface
 import com.aura.app.data.model.Credentials
+import com.aura.app.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val serviceInterface: ServiceInterface) : ViewModel() {
+class LoginViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid = _isFormValid.asStateFlow()
 
@@ -45,7 +46,7 @@ class LoginViewModel @Inject constructor(private val serviceInterface: ServiceIn
         try {
             _loginState.value = LoginState.Loading
             val credentials = Credentials(id = identifier, password = password)
-            val result = serviceInterface.login(credentials)
+            val result = repository.login(credentials)
             if (result.granted){
                 //connexion reussie, toast message "Connexion Succès"
                 _loginState.value = LoginState.Success(identifier)//recup de l'identifier -> vers userId
