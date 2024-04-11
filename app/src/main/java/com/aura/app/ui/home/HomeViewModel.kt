@@ -32,10 +32,11 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
                 Log.d("HomeViewModel","Account récupéré avec succès")
             } catch (e: Exception) {
                 //affiche un message générique en cas d'exeption
-                Log.e("HomeViewModel", "Une erreur s'est produite lors de la récupération des comptes", e)
-            } //catch (e:HttpException) {
-                //Log.e("HomeViewModel","HTTP Erreur lors de la récuperation de compte")
-            //}
+                Log.e(
+                    "HomeViewModel",
+                    "Une erreur s'est produite lors de la récupération des comptes"
+                )
+            }
         }
     }
 }

@@ -10,6 +10,10 @@ import com.aura.app.data.model.TransferResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+
+ /**
+ * Ici une interface Retrofit définissant les points de terminaison des services réseau.
+ */
 interface ServiceInterface {
     @POST("/login")
     suspend fun login(@Body credentials: Credentials): CredentialsResult

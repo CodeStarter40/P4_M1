@@ -62,8 +62,7 @@ class HomeActivity : AppCompatActivity() {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.home_menu, menu)
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean { menuInflater.inflate(R.menu.home_menu, menu)
     return true
   }
 

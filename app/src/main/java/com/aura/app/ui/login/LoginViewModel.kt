@@ -1,6 +1,7 @@
 package com.aura.app.ui.login
 
 
+import retrofit2.HttpException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.app.data.network.ServiceInterface
@@ -10,8 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import java.io.IOException
 import javax.inject.Inject
+import kotlin.Exception
 
 
 @HiltViewModel
@@ -58,6 +60,20 @@ class LoginViewModel @Inject constructor(private val repository: Repository) : V
         } catch (e: Exception) {
             _loginState.value = LoginState.Error(e.message ?: "Unknown error")
 
+        } catch (e:HttpException) {
+            val errorMessage = when (e.code()) {
+                401 -> "Non autorisé. Vérifiez vos identifiants."
+                403 -> "Accès refusé."
+                404 -> "Service non trouvé."
+                else -> "Erreur de connexion : ${e.code()}"
+            }
+            _loginState.value = LoginState.Error(errorMessage)
+        } catch (e:IOException) {
+            //network connexion problem
+
+        } catch (e:Exception) {
+            //unknow error
+            _loginState.value = LoginState.Error(e.message ?:"Une erreur inconnue est survenue")
         }
     }
     }
