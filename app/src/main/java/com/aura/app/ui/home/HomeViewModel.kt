@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
                     404 -> "Comptes utilisateurs non trouvés."
                     else -> "Erreur de connexion : ${e.code()}"
                 }
-                //_loginState.value = LoginState.error(errorMessage)
+                //_loginState.value = loginState.error(errorMessage)
             }
         }
     }

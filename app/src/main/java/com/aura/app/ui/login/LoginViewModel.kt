@@ -70,6 +70,7 @@ class LoginViewModel @Inject constructor(private val repository: Repository) : V
             _loginState.value = LoginState.Error(errorMessage)
         } catch (e:IOException) {
             //network connexion problem
+            _loginState.value = LoginState.Error("Problème de connexion réseau")
 
         } catch (e:Exception) {
             //unknow error
