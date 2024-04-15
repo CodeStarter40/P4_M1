@@ -1,6 +1,7 @@
 package com.aura.app.ui.transfer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -24,7 +25,8 @@ class TransferActivity : AppCompatActivity() {
     setContentView(binding.root)
     setupObservers()
 
-    val senderId = "1234" //temp senderId
+    //val senderId = "1234" //temp senderId for demonstration error
+    val senderId = intent.getStringExtra("SENDER_ID")!!
 
     binding.transfer.setOnClickListener {
       val recipientId = binding.recipient.text.toString()
@@ -42,7 +44,7 @@ class TransferActivity : AppCompatActivity() {
           is TransferState.Success -> {
             binding.loading.visibility = View.GONE
             Toast.makeText(this@TransferActivity, state.message, Toast.LENGTH_LONG).show()
-            finish()
+            finish() //back to home
           }
           is TransferState.Error -> {
             binding.loading.visibility = View.GONE

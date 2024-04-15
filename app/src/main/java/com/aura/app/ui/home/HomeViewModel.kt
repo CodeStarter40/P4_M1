@@ -36,9 +36,7 @@ class HomeViewModel @Inject constructor(private val bankRepository: BankReposito
             } catch (e: Exception) {
                 //affiche un message générique en cas d'exeption
                 Log.e(
-                    "HomeViewModel",
-                    "Une erreur s'est produite lors de la récupération des comptes"
-                )
+                    "HomeViewModel", "Une erreur s'est produite lors de la récupération des comptes")
             } catch (e: HttpException) {
                 val errorMessage = when (e.code()) {
                     401 -> "Non autorisé ou session expirée."
@@ -47,6 +45,18 @@ class HomeViewModel @Inject constructor(private val bankRepository: BankReposito
                     else -> "Erreur de connexion : ${e.code()}"
                 }
                 // _loginState.value = loginState.error(errorMessage)
+            }
+        }
+    }
+
+    fun refreshAccount(userId: String) {
+        viewModelScope.launch {
+            try {
+                val accountsList = bankRepository.getAccountsByUserId(userId)
+                _accounts.value = accountsList
+                Log.d("HomeViewModel", "Comptes rafraîchis avec succès")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Une erreur s'est produite lors du rafraîchissement des comptes")
             }
         }
     }

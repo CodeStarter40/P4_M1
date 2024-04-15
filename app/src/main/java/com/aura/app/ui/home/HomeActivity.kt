@@ -46,15 +46,17 @@ class HomeActivity : AppCompatActivity() {
 
     //initialisation du bouton de transfert
     binding.transfer.setOnClickListener {
-      startTransferActivityForResult.launch(Intent(this, TransferActivity::class.java))
+      val intent = Intent(this, TransferActivity::class.java)
+      intent.putExtra("SENDER_ID", userId)
+      startTransferActivityForResult.launch(intent)
     }
   }
 
   private fun observeAccountData() {
     lifecycleScope.launchWhenStarted {
       viewModel.accounts.collect { accounts ->
-        //trouver le compte principal dans la liste
         Log.d("LOG", "OBSERVEACCOUNTDATA EXECUTED")
+        //trouver le compte principal dans la liste
         val mainAccount = accounts.find { it.main }
         //mettre a jour li'nterface user avec le solde, si nul : N/A
         binding.balance.text = mainAccount?.balance?.let { "$it€" } ?: "N/A"
