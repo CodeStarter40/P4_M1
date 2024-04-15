@@ -4,10 +4,9 @@ import retrofit2.HttpException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aura.app.data.network.ServiceInterface
 import com.aura.app.data.model.Account
-import com.aura.app.data.repository.Repository
-import com.aura.app.ui.login.LoginState
+import com.aura.app.data.repository.BankRepository
+import com.aura.app.data.model.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,20 +17,20 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel()  {
+class HomeViewModel @Inject constructor(private val bankRepository: BankRepository) : ViewModel()  {
     //mutableStateFlow pour stocker la liste des comptes, initialisé avec une liste vide
     private val _accounts = MutableStateFlow<List<Account>>(emptyList())
     //stateFlow immuable exposant la liste des comptes en lecture seule
     val accounts: StateFlow<List<Account>> = _accounts.asStateFlow()
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Waiting)
-    val loginState = _loginState.asStateFlow()
+    private val _resultState = MutableStateFlow<ResultState>(ResultState.Waiting)
+    val loginState = _resultState.asStateFlow()
 
 
 
     fun fetchAccountUser(userId: String) {
         viewModelScope.launch {//asynch
             try {
-                val accountsList = repository.getAccountsByUserId(userId) //récup de la liste des comptes de l'utilisateur à partir du service
+                val accountsList = bankRepository.getAccountsByUserId(userId) //récup de la liste des comptes de l'utilisateur à partir du service
                 _accounts.value = accountsList //maj account dans le mutableflow
                 Log.d("HomeViewModel","Account récupéré avec succès")
             } catch (e: Exception) {
@@ -47,7 +46,7 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
                     404 -> "Comptes utilisateurs non trouvés."
                     else -> "Erreur de connexion : ${e.code()}"
                 }
-                //_loginState.value = loginState.error(errorMessage)
+                // _resultState.value = loginState.error(errorMessage)
             }
         }
     }

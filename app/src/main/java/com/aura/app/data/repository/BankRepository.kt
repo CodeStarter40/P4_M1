@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 
 
-class Repository @Inject constructor(private val serviceInterface: ServiceInterface) {
+class BankRepository @Inject constructor(private val serviceInterface: ServiceInterface) {
 
     /**
      * Tente de connecter l'utilisateur en utilisant les informations d'identification fournies.

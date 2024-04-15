@@ -1,7 +1,7 @@
 package com.aura.app.data.network
 
 import com.aura.BuildConfig
-import com.aura.app.data.repository.Repository
+import com.aura.app.data.repository.BankRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -55,6 +55,6 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun provideRepository(serviceInterface: ServiceInterface): Repository = Repository(serviceInterface)
+    fun provideRepository(serviceInterface: ServiceInterface): BankRepository = BankRepository(serviceInterface)
 }
 
