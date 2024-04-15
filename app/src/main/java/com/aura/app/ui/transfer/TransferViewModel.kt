@@ -6,6 +6,7 @@ import com.aura.app.data.model.Transfer
 import com.aura.app.data.repository.BankRepository
 import javax.inject.Inject
 import com.aura.app.data.state.TransferState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,11 +14,12 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
+@HiltViewModel
 class TransferViewModel @Inject constructor( private val bankRepository: BankRepository): ViewModel() {
     private val _transferState = MutableStateFlow<TransferState>(TransferState.Waiting)
     val transferState: StateFlow<TransferState> = _transferState.asStateFlow()
 
-    fun goTransfer(senderId: String,recipientId: String,amountString: String) {
+    fun goTransfer(senderId: String, recipientId: String, amountString: String) {
         val amount = amountString.toDoubleOrNull()
         if (recipientId.isBlank() || amount == null || amount <= 0) {
             _transferState.value =

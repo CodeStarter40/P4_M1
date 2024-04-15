@@ -5,21 +5,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.aura.app.data.state.TransferState
 import com.aura.databinding.ActivityTransferBinding
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
 
-
-/**
- * The transfer activity for the app.
- */
 @AndroidEntryPoint
 class TransferActivity : AppCompatActivity() {
 
-  /**
-   * The binding for the transfer layout.
-   */
   private lateinit var binding: ActivityTransferBinding
   private val viewModel: TransferViewModel by viewModels()
 
@@ -30,19 +24,13 @@ class TransferActivity : AppCompatActivity() {
     setContentView(binding.root)
     setupObservers()
 
-    val recipient = binding.recipient
-    val amount = binding.amount
-    val transfer = binding.transfer
-    val loading = binding.loading
+    val senderId = "1234" //temp senderId
 
     binding.transfer.setOnClickListener {
-      loading.visibility = View.VISIBLE
-      val recipientId = recipient.text.toString()
-      val amountString = amount.text.toString()
+      val recipientId = binding.recipient.text.toString()
+      val amountString = binding.amount.text.toString()
 
-      loading.visibility = View.VISIBLE
-
-      viewModel.goTransfer(recipientId, amountString)
+      viewModel.goTransfer(senderId, recipientId, amountString)
     }
   }
 
