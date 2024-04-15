@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.app.data.model.Account
 import com.aura.app.data.repository.BankRepository
-import com.aura.app.data.model.ResultState
+import com.aura.app.data.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +22,8 @@ class HomeViewModel @Inject constructor(private val bankRepository: BankReposito
     private val _accounts = MutableStateFlow<List<Account>>(emptyList())
     //stateFlow immuable exposant la liste des comptes en lecture seule
     val accounts: StateFlow<List<Account>> = _accounts.asStateFlow()
-    private val _resultState = MutableStateFlow<ResultState>(ResultState.Waiting)
-    val loginState = _resultState.asStateFlow()
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Waiting)
+    val loginState = _loginState.asStateFlow()
 
 
 
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(private val bankRepository: BankReposito
                     404 -> "Comptes utilisateurs non trouvés."
                     else -> "Erreur de connexion : ${e.code()}"
                 }
-                // _resultState.value = loginState.error(errorMessage)
+                // _loginState.value = loginState.error(errorMessage)
             }
         }
     }

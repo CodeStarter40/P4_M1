@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import android.widget.Toast
-import com.aura.app.data.model.ResultState
+import com.aura.app.data.state.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -57,16 +57,16 @@ class LoginActivity : AppCompatActivity() {
   }
 
 
-  private fun handleLoginState(state: ResultState) {
+  private fun handleLoginState(state: LoginState) {
     when (state) {
-      is ResultState.Waiting -> binding.loading.visibility = View.GONE
-      is ResultState.Loading -> binding.loading.visibility = View.VISIBLE
-      is ResultState.Success -> {
+      is LoginState.Waiting -> binding.loading.visibility = View.GONE
+      is LoginState.Loading -> binding.loading.visibility = View.VISIBLE
+      is LoginState.Success -> {
         binding.loading.visibility = View.VISIBLE
         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
         navigateToHome(state.userId)
       }
-      is ResultState.Error -> {
+      is LoginState.Error -> {
         binding.loading.visibility = View.GONE
         showError(state.message)
       }
@@ -84,9 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
     //observe form validation change
     lifecycleScope.launch {
-      viewModel.isFormValid.collect { isValid ->
-        binding.login.isEnabled = isValid
-      }
+      viewModel.isFormValid.collect { isValid -> binding.login.isEnabled = isValid }
     }
   }
 
