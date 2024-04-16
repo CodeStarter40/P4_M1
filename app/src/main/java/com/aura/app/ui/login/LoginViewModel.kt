@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(private val bankRepository: BankReposit
     }
 
     /**
-     * * Attempts to log in with the provided credentials.
+     * Attempts to log in with the provided credentials.
      * - Launches a coroutine within the viewModelScope to handle the asynchronous login process.
      * - Sets the loginState LiveData to Loading to indicate that the login process has started.
      * - Creates a Credentials object with the provided identifier and password.
@@ -73,10 +73,10 @@ class LoginViewModel @Inject constructor(private val bankRepository: BankReposit
 
         } catch (e:HttpException) {
             val errorMessage = when (e.code()) {
-                401 -> "Non autorisé. Vérifiez vos identifiants."
-                403 -> "Accès refusé."
-                404 -> "Service non trouvé."
-                else -> "Erreur de connexion : ${e.code()}"
+                401 -> "Unauthorized or session expired."
+                403 -> "Access denied."
+                404 -> "User account not found."
+                else -> "Connexion Error : ${e.code()}"
             }
             _loginState.value = LoginState.Error(errorMessage)
         } catch (e:IOException) {

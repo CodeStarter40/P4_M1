@@ -15,11 +15,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-/**
- * ViewModel for the Home screen
- * //////////////
- * ViewModel pour l'écran d'accueil
- */
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val bankRepository: BankRepository) : ViewModel()  {
@@ -51,7 +46,7 @@ class HomeViewModel @Inject constructor(private val bankRepository: BankReposito
             } catch (e: HttpException) {
                 val errorMessage = when (e.code()) {
                     401 -> "Unauthorized or session expired."
-                    403 -> "Access denied for account data."
+                    403 -> "Access denied."
                     404 -> "User account not found."
                     else -> "Connexion Error : ${e.code()}"
                 }

@@ -15,11 +15,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-/**
- * ViewModel of the transfer screen.
- * //////////
- * ViewModel de l'écran de transfert.
- */
+
 
 @HiltViewModel
 class TransferViewModel @Inject constructor( private val bankRepository: BankRepository): ViewModel() {
