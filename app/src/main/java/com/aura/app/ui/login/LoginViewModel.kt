@@ -33,6 +33,17 @@ class LoginViewModel @Inject constructor(private val bankRepository: BankReposit
     }
 
     /**
+     * * Attempts to log in with the provided credentials.
+     * - Launches a coroutine within the viewModelScope to handle the asynchronous login process.
+     * - Sets the loginState LiveData to Loading to indicate that the login process has started.
+     * - Creates a Credentials object with the provided identifier and password.
+     * - Calls the login service to authenticate the credentials.
+     * - If authentication is successful, sets the loginState to Success, updates the userId in LoginState, and displays a success message.
+     * - If authentication fails, sets the loginState to Error with an appropriate error message.
+     * - If an exception occurs during the login process, sets the loginState to Error with a generic error message.
+     * @param identifier The user's identifier.
+     * @param password The user's password
+     * ////////////////////////
      * Tente de se connecter avec les identifiants fournis.
      * - Lance un coroutine dans le viewModelScope pour gérer le processus de connexion asynchrone.
      * - Définit le LiveData loginState sur l'état Loading pour indiquer que le processus de connexion a démarré.

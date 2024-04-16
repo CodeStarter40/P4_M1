@@ -1,7 +1,7 @@
 package com.aura.app.ui.transfer
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.aura.app.data.state.TransferState
 import com.aura.databinding.ActivityTransferBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class TransferActivity : AppCompatActivity() {
@@ -36,18 +36,22 @@ class TransferActivity : AppCompatActivity() {
     }
   }
 
+  /**
+   * Sets up observers for the transfer state LiveData to handle UI updates accordingly.
+   * ////////
+   * Configure les observateurs pour le LiveData de l'état de transfert afin de gérer les mises à jour de l'interface utilisateur en conséquence.
+   */
   private fun setupObservers() {
     lifecycleScope.launchWhenStarted {
       viewModel.transferState.collect { state ->
         when (state) {
           is TransferState.Loading -> binding.loading.visibility = View.VISIBLE
-          is TransferState.Success -> {
-            binding.loading.visibility = View.GONE
+          is TransferState.Success -> { binding.loading.visibility = View.GONE
             Toast.makeText(this@TransferActivity, state.message, Toast.LENGTH_LONG).show()
+            setResult(Activity.RESULT_OK)
             finish() //back to home
           }
-          is TransferState.Error -> {
-            binding.loading.visibility = View.GONE
+          is TransferState.Error -> { binding.loading.visibility = View.GONE
             Toast.makeText(this@TransferActivity, state.message, Toast.LENGTH_LONG).show()
           }
           else -> binding.loading.visibility = View.GONE

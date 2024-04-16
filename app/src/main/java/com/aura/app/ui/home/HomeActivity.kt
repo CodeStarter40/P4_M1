@@ -1,5 +1,6 @@
 package com.aura.app.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,9 +24,18 @@ class HomeActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityHomeBinding
 
+  /**
+   * A property to register for activity result handling when starting the transfer activity.
+   * It refreshes the user account if the result is OK.
+   * Une propriété pour enregistrer le traitement du résultat de l'activité lors du démarrage de l'activité de transfert.
+   * Cela rafraîchit le compte utilisateur si le résultat est OK.
+   */
   private val startTransferActivityForResult =
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-      //traiter le résultat de TransferActivity si nécessaire
+      if (result.resultCode == Activity.RESULT_OK) {
+        val userId = intent.getStringExtra("USER_ID") ?: return@registerForActivityResult
+        viewModel.refreshAccount(userId)
+      }
     }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
     observeAccountData() //call de la fonction pour observer les données du compte
 
     val userId = intent.getStringExtra("USER_ID") //récup de l'id du user passé en extra dans l'intent
-    Log.d("HomeActivity", "Appel de fetchAccountUser avec l'ID utilisateur: $userId") //log placé pour voir si userId est null
+    Log.d("HomeActivity", "Call fetchAccountUser with userID: $userId") //log placé pour voir si userId est null
     if (userId != null) { //verif user no null
       viewModel.fetchAccountUser(userId) //appel fetchAccountUser du viewModel
     } else {
@@ -52,6 +62,10 @@ class HomeActivity : AppCompatActivity() {
     }
   }
 
+  /**
+   * Observes changes in the account data and updates the user interface accordingly.
+   * Observe les changements dans les données du compte et met à jour l'interface utilisateur en conséquence.
+   */
   private fun observeAccountData() {
     lifecycleScope.launchWhenStarted {
       viewModel.accounts.collect { accounts ->
