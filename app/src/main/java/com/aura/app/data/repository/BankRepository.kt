@@ -32,6 +32,11 @@ class BankRepository @Inject constructor(private val serviceInterface: ServiceIn
 
     suspend fun getAccountsByUserId(userId: String): List<Account> { return serviceInterface.getAccountsByUserId(userId) }
 
+    /**
+     * Effectue une opération de transfert.
+     * @param transfer Les détails du transfert.
+     * @return Le résultat du transfert.
+     */
 
     suspend fun transfer(transfer: Transfer): TransferResult { return serviceInterface.transfer(transfer)}
 
