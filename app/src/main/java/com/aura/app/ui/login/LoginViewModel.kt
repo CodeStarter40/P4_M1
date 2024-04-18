@@ -55,6 +55,7 @@ class LoginViewModel @Inject constructor(private val bankRepository: BankReposit
      * @param identifier L'identifiant de l'utilisateur.
      * @param password Le mot de passe de l'utilisateur.
      */
+
     fun login(identifier: String,password: String){ viewModelScope.launch {
         try {
             _loginState.value = LoginState.Loading

@@ -12,7 +12,7 @@ import retrofit2.http.Path
 
 
  /**
- * Ici une interface Retrofit définissant les points de terminaison des services réseau.
+ * Une interface Retrofit définissant les points de terminaison des services réseau.
  */
 interface ServiceInterface {
     @POST("/login")

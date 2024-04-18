@@ -28,8 +28,7 @@ object NetworkModule {
     private val json = Json { ignoreUnknownKeys = true }
 
     private val okHttpClient = OkHttpClient.Builder().apply {
-        addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-    }.build()
+        addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }) }.build()
 
     /**
      *fournit une instance de Retrofit pour les appels réseau. ( SERVER renseigné dans le Gradle )
