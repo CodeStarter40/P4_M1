@@ -3,6 +3,7 @@ package com.aura
 import com.aura.app.data.model.*
 import com.aura.app.data.network.ServiceInterface
 import com.aura.app.data.repository.BankRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +35,7 @@ import org.mockito.MockitoAnnotations
  * - Assertion pour vérifier le bon retour.
  */
 
+@ExperimentalCoroutinesApi
 class BankRepositoryTest {
 
     //mock pour simuler le ServiceInterface qui interagit avec le réseau
