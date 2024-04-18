@@ -4,7 +4,7 @@ import com.aura.app.data.model.*
 import com.aura.app.data.network.ServiceInterface
 import com.aura.app.data.repository.BankRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -56,7 +56,7 @@ class BankRepositoryTest {
 
     //test la fonction de login
     @Test
-    fun testLogin() = runBlockingTest {
+    fun testLogin() = runTest {
         //data pour le test
         val credentials = Credentials("username", "password")
         val expectedResult = CredentialsResult(true)
@@ -74,7 +74,7 @@ class BankRepositoryTest {
 
     //test la récup des comptes d'un utilisateur
     @Test
-    fun testGetAccountsByUserId() = runBlockingTest {
+    fun testGetAccountsByUserId() = runTest {
         val userId = "1234"
         val expectedAccounts = listOf(Account("1", true, 250.0))
 
@@ -88,7 +88,7 @@ class BankRepositoryTest {
 
     //test la fonction de transfert pour s'assurer qu'elle envoie les bonnes informations de transfert et gère correctement le résultat
     @Test
-    fun testTransfer() = runBlockingTest {
+    fun testTransfer() = runTest {
         val transfer = Transfer("senderId", "recipientId", 223.0)
         val expectedResult = TransferResult(true)
 
