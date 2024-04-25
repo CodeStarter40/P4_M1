@@ -99,6 +99,6 @@ class LoginTest {
 
         val state = viewModel.loginState.value
 
-
+        assertTrue(state is LoginState.Error && state.message.equals ("Invalid credentials"))
     }
 }
